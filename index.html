@@ -3,239 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة تحميل الملفات</title>
+    <title>التحميل</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-
-        :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #50e3c2;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --text-color: #ffffff;
-        }
-
-        * {
-            box-sizing: border-box;
+        body {
             margin: 0;
             padding: 0;
-        }
-
-        body {
-            font-family: 'Tajawal', sans-serif;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* المسار المطلوب للخلفية مع تدرج احتياطي في حالة عدم وجود الصورة */
-            background: linear-gradient(135deg, rgba(20,30,48,0.9), rgba(36,59,85,0.9)), url('background.jpg');
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        .container {
-            width: 100%;
-            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-        }
-
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            max-width: 400px;
+            min-height: 100vh;
+            color: #333;
             text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transform: translateY(20px);
-            opacity: 0;
-            animation: slideUp 0.8s ease-out forwards;
         }
-
-        @keyframes slideUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
         }
-
         h1 {
-            color: var(--text-color);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
         }
-
-        .file-preview {
-            width: 100%;
-            height: 250px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 12px;
-            margin-bottom: 25px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px dashed rgba(255,255,255,0.3);
-            position: relative;
-        }
-
-        /* تنسيق الصورة المطلوبة */
-        .file-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .file-preview:hover img {
-            transform: scale(1.05);
-        }
-
-        /* عنصر احتياطي يظهر فقط في حال لم يجد المتصفح الصورة file.jpg */
-        .img-fallback {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            color: #eee;
-        }
-        
-        .img-fallback span {
-            font-size: 4rem;
-            margin-bottom: 10px;
-        }
-
-        .file-info {
-            color: #ddd;
+        p {
+            font-size: 1.1rem;
             margin-bottom: 30px;
         }
-
-        .file-info h3 {
-            color: #fff;
-            margin-bottom: 5px;
+        .preview {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
         .download-btn {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            display: inline-block;
+            background: #3498db;
             color: white;
+            padding: 12px 25px;
             text-decoration: none;
-            padding: 15px 30px;
-            border-radius: 50px;
+            border-radius: 8px;
             font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
+            transition: background 0.3s;
+            margin-top: 10px;
         }
-
         .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(80, 227, 194, 0.5);
+            background: #2980b9;
         }
-
-        .download-btn:active {
-            transform: translateY(0);
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
         }
-
-        .file-meta {
-            margin-top: 15px;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        /* Loading animation for image */
-        .skeleton {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #ffffff10 25%, #ffffff20 50%, #ffffff10 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
     </style>
 </head>
 <body>
-
     <div class="container">
-        <div class="card">
-            <h1>المكتبة الفيزيائية</h1>
-            
-            <div class="file-preview">
-                <!-- عنصر تحميل وهمي يختفي عند تحميل الصورة -->
-                <div class="skeleton" id="skeleton"></div>
-                
-                <!-- الصورة المطلوبة -->
-                <img src="file.jpg" alt="غلاف الملف PDF" id="pdf-image" onerror="handleImageError(this)">
-                
-                <!-- الشكل البديل في حال لم توجد الصورة -->
-                <div class="img-fallback" id="fallback">
-                    <span>📄</span>
-                    <p>معاينة الملف</p>
-                </div>
-            </div>
-
-            <div class="file-info">
-                <h3>امتحان الفيزياء الشامل</h3>
-                <p>نسخة إلكترونية عالية الجودة بصيغة PDF</p>
-            </div>
-
-            <!-- رابط التحميل المطلوب -->
-            <a href="pdf1.pdf" class="download-btn" download>
-                <span>📥</span>
-                تحميل الملف
-            </a>
-
-            <div class="file-meta">
-                <span>الصيغة: PDF</span>
-                <span>•</span>
-                <span>محمى وآمن</span>
-            </div>
-        </div>
+        <h1>📚 تحميل النسخة الرقمية</h1>
+        <p>يمكنك مشاهدة نسخة PDF من الكتاب، أو تحميلها مباشرةً إلى جهازك.</p>
+        
+        <img src="file.jpg" alt="مُعاينة الكتاب" class="preview">
+        
+        <a href="pdf1.pdf" class="download-btn" download>
+            ⬇️ تحميل الكتاب كملف PDF
+        </a>
     </div>
-
-    <script>
-        // دالة بسيطة للتعامل مع غياب الصور في بيئة التجربة
-        // (ستعمل الصورة الحقيقية إذا كانت الملفات موجودة بجانب ملف HTML)
-        function handleImageError(img) {
-            img.style.display = 'none';
-            document.getElementById('skeleton').style.display = 'none';
-            document.getElementById('fallback').style.display = 'flex';
-        }
-
-        // إخفاء تأثير التحميل بمجرد تحميل الصورة (إذا وجدت)
-        const img = document.getElementById('pdf-image');
-        img.onload = function() {
-            document.getElementById('skeleton').style.display = 'none';
-        };
-    </script>
 </body>
 </html>
+
